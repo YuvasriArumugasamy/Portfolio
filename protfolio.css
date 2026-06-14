@@ -217,12 +217,15 @@ body {
 
 /* ============ AOS ANIMATIONS ============ */
 [data-aos] {
-  opacity: 0; transform: translateY(30px);
+  opacity: 0; transform: translateY(24px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-[data-aos="fade-right"] { transform: translateX(-30px); }
-[data-aos="fade-left"]  { transform: translateX(30px); }
-[data-aos="zoom-in"]    { transform: scale(0.85); }
+/* On mobile, avoid translateX which causes horizontal overflow */
+@media (min-width: 769px) {
+  [data-aos="fade-right"] { transform: translateX(-24px); opacity: 0; }
+  [data-aos="fade-left"]  { transform: translateX(24px);  opacity: 0; }
+}
+[data-aos="zoom-in"]    { transform: scale(0.88); opacity: 0; }
 [data-aos].aos-animate  { opacity: 1; transform: none; }
 [data-aos-delay="100"].aos-animate { transition-delay: 0.1s; }
 [data-aos-delay="150"].aos-animate { transition-delay: 0.15s; }
@@ -239,6 +242,7 @@ body {
   position: relative; overflow: hidden;
   padding: 100px 24px 70px;
   background: linear-gradient(135deg, #f8faff 0%, #eff6ff 50%, #f0f4ff 100%);
+  max-width: 100%;
 }
 
 /* Particles */
@@ -871,59 +875,146 @@ body {
 .back-to-top:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(37,99,235,0.45); }
 
 /* ============ RESPONSIVE ============ */
+
+/* — Global overflow fix — */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+section, footer, nav {
+  overflow-x: hidden;
+}
+
+/* ---- 1024px ---- */
 @media (max-width: 1024px) {
   .skills-grid   { grid-template-columns: 1fr 1fr; }
   .services-grid { grid-template-columns: 1fr 1fr; }
+  .hero-img-wrapper { width: 340px; height: 340px; }
 }
 
+/* ---- 900px ---- */
 @media (max-width: 900px) {
-  .hero-container { flex-direction: column; text-align: center; }
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
   .hero-left { max-width: 100%; }
   .hero-btns, .hero-stats { justify-content: center; }
   .hero-right { order: -1; }
-  .hero-img-wrapper { width: 280px; height: 280px; margin: 0 auto; }
-  .fb-1 { left: -5%; }
-  .fb-2 { left: -5%; }
-  .fb-3 { right: -5%; }
+  .hero-img-wrapper { width: 260px; height: 260px; margin: 0 auto; }
+
+  /* Hide rings that overflow on small screens */
+  .ring-2, .ring-3 { display: none; }
+  .ring-1 { inset: -10px; }
+
+  /* Keep float badges inside viewport */
+  .fb-1 { left: 0; top: 5%; }
+  .fb-2 { left: 0; top: auto; bottom: -10px; }
+  .fb-3 { right: 0; top: 40%; }
+
   .about-grid { flex-direction: column; }
   .about-cards { grid-template-columns: 1fr 1fr; }
   .edu-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .footer-container { grid-template-columns: 1fr 1fr; }
+
+  /* Blobs — reduce size to prevent overflow */
+  .blob-1 { width: 300px; height: 300px; right: -80px; }
+  .blob-2 { width: 250px; height: 250px; left: -60px; }
+  .blob-3 { display: none; }
 }
 
+/* ---- 768px ---- */
 @media (max-width: 768px) {
   .nav-links {
-    display: none; position: absolute;
-    top: 100%; left: 0; right: 0;
-    background: rgba(255,255,255,0.97);
+    display: none;
+    position: fixed;
+    top: 60px; left: 0; right: 0;
+    background: rgba(255,255,255,0.98);
     backdrop-filter: blur(20px);
-    flex-direction: column; padding: 20px;
+    flex-direction: column;
+    padding: 16px 20px;
     border-bottom: 1px solid var(--border);
     box-shadow: 0 8px 30px rgba(37,99,235,0.1);
     gap: 4px;
+    width: 100%;
   }
   .nav-links.open { display: flex; }
   .hamburger { display: block; }
+  .hire-btn { padding: 8px 14px; font-size: 0.8rem; }
+
   .skills-grid   { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
   .featured-project { grid-column: auto; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .footer-container { grid-template-columns: 1fr; gap: 32px; }
   .footer-bottom { flex-direction: column; text-align: center; }
+
+  /* Hero badge wraps on small screens */
+  .hero-badge {
+    font-size: 0.7rem;
+    padding: 6px 12px;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Float badges hidden — they cause overflow */
+  .float-badge { display: none; }
+
+  /* Sections padding */
+  .about-section,
+  .skills-section,
+  .projects-section,
+  .services-section,
+  .edu-section,
+  .contact-section { padding: 80px 16px; }
+
+  .section-sub { margin-bottom: 36px; }
 }
 
+/* ---- 480px ---- */
 @media (max-width: 480px) {
-  .hero-section { padding: 88px 16px 50px; }
-  .hero-title .hero-name { font-size: 2rem; }
-  .hero-btns { flex-direction: column; align-items: center; }
-  .btn-primary, .btn-outline { width: 100%; justify-content: center; }
-  .hero-stats { gap: 14px; }
-  .stat-num { font-size: 1.4rem; }
-  .services-grid { grid-template-columns: 1fr; }
-  .about-section, .skills-section, .projects-section,
-  .services-section, .edu-section, .contact-section { padding: 72px 16px; }
-  .contact-form-box { padding: 24px; }
-  .about-cards { grid-template-columns: 1fr; }
+  .hero-section { padding: 86px 16px 56px; }
+
+  .hero-img-wrapper { width: 220px; height: 220px; }
+  .ring { display: none; }
   .float-badge { display: none; }
+
+  .hero-title .hero-name { font-size: 1.9rem; }
+  .hero-greeting { font-size: 0.95rem; }
+  .hero-role-wrap { font-size: 1.05rem; }
+  .hero-desc { font-size: 0.9rem; }
+
+  .hero-btns { flex-direction: column; align-items: stretch; }
+  .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+
+  .hero-stats { gap: 12px; }
+  .stat-num { font-size: 1.3rem; }
+  .stat-divider { height: 32px; }
+
+  .services-grid  { grid-template-columns: 1fr; }
+  .about-cards    { grid-template-columns: 1fr; }
+
+  .contact-form-box { padding: 20px; }
+
+  .skills-card,
+  .project-card,
+  .service-card { padding: 20px; }
+
+  .footer { padding: 48px 16px 0; }
+  .footer-container { gap: 24px; }
+
+  /* EDU timeline — prevent overflow */
+  .edu-timeline { padding-left: 18px; }
+  .edu-dot { margin-left: -18px; }
+  .edu-content { padding: 12px 14px; }
+
+  /* Blobs fully hidden on very small screens */
+  .hero-bg-blob { display: none; }
+
+  /* Nav */
+  .nav-container { padding: 0 16px; }
+  .nav-logo { font-size: 1.1rem; }
 }
