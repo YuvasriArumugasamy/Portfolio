@@ -28,13 +28,23 @@
         <span class="logo-bracket">&lt;/&gt;</span> Yuvasri
       </a>
       <ul class="nav-links" id="navLinks">
+        <li class="nav-close-row">
+          <button class="nav-close-btn" id="navClose" aria-label="Close menu">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </li>
         <li><a href="#home"     class="nav-link active">About</a></li>
         <li><a href="#skills"   class="nav-link">Skills</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
         <li><a href="#services" class="nav-link">Services</a></li>
         <li><a href="#contact"  class="nav-link">Contact</a></li>
+        <li class="nav-hire-mobile">
+          <a href="Yuvasri A - Front-End Web Developer.pdf" download class="hire-btn">
+            <i class="fa-solid fa-download"></i> Hire Me
+          </a>
+        </li>
       </ul>
-      <a href="Yuvasri A - Front-End Web Developer.pdf" download class="hire-btn">
+      <a href="Yuvasri A - Front-End Web Developer.pdf" download class="hire-btn hire-btn-desktop">
         <i class="fa-solid fa-download"></i> Hire Me
       </a>
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -772,26 +782,37 @@
     const navbar = document.getElementById('navbar');
     const hamburger = document.getElementById('hamburger');
     const navLinksEl = document.getElementById('navLinks');
+    const navClose = document.getElementById('navClose');
+
+    function openMenu() {
+      navLinksEl.classList.add('open');
+      hamburger.querySelector('i').className = 'fa-solid fa-xmark';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      navLinksEl.classList.remove('open');
+      hamburger.querySelector('i').className = 'fa-solid fa-bars';
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      navLinksEl.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    navClose.addEventListener('click', closeMenu);
 
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 60);
-      // Active link
-      const sections = document.querySelectorAll('section[id], div[id]');
-      let current = '';
+      // Active nav link highlight on scroll
+      const sections = document.querySelectorAll('section[id]');
+      let current = 'home';
       sections.forEach(s => {
-        if (window.scrollY >= s.offsetTop - 100) current = s.getAttribute('id');
+        if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
       });
       document.querySelectorAll('.nav-link').forEach(l => {
         l.classList.toggle('active', l.getAttribute('href') === '#' + current);
       });
       // Back to top
       document.getElementById('backToTop').classList.toggle('show', window.scrollY > 400);
-    });
-
-    hamburger.addEventListener('click', () => {
-      navLinksEl.classList.toggle('open');
-      hamburger.querySelector('i').className =
-        navLinksEl.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
     });
 
     /* ============ SMOOTH SCROLL ============ */
@@ -803,8 +824,7 @@
         const target = document.querySelector(href);
         if (target) {
           target.scrollIntoView({ behavior: 'smooth' });
-          navLinksEl.classList.remove('open');
-          hamburger.querySelector('i').className = 'fa-solid fa-bars';
+          closeMenu();
         }
       });
     });
