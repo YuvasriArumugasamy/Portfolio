@@ -257,15 +257,23 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overf
 }
 .mobile-menu.open { display: flex; }
 
-.mobile-menu-close {
+.mobile-menu-header {
   position: absolute;
-  top: 20px; right: 20px;
+  top: 0; left: 0; right: 0;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+
+.mobile-menu-close {
   background: var(--blue-pale);
   border: 1.5px solid var(--blue-border);
   color: var(--blue);
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  font-size: 1.2rem;
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  font-size: 1.1rem;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: all .25s ease;

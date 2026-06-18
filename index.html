@@ -46,7 +46,12 @@
 
 <!-- MOBILE MENU — completely separate from navbar -->
 <div id="mobileMenu" class="mobile-menu">
-  <button id="mobClose" class="mobile-menu-close"><i class="fa-solid fa-xmark"></i></button>
+  <div class="mobile-menu-header">
+    <a class="nav-logo" href="#home" onclick="document.getElementById('mobileMenu').classList.remove('open');document.body.style.overflow='';">
+      <span>&lt;/&gt;</span> Yuvasri
+    </a>
+    <button id="mobClose" class="mobile-menu-close"><i class="fa-solid fa-xmark"></i></button>
+  </div>
   <ul>
     <li><a href="#home"     class="mob-link">About</a></li>
     <li><a href="#skills"   class="mob-link">Skills</a></li>
