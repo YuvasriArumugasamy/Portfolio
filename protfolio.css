@@ -19,10 +19,12 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overf
 
 /* ===== LOADER ===== */
 .loader{position:fixed;inset:0;z-index:9999;background:#fff;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease}
-.loader-logo{font-size:3rem;font-weight:900;background:linear-gradient(135deg,var(--blue),#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px;animation:lbounce .8s ease infinite alternate}
-@keyframes lbounce{from{transform:translateY(0)}to{transform:translateY(-12px)}}
-.loader-bar{width:180px;height:4px;background:#e2e8f0;border-radius:4px;overflow:hidden}
+.loader-inner{text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px}
+.loader-logo{font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--blue),#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:lbounce .8s ease infinite alternate;letter-spacing:-0.5px}
+@keyframes lbounce{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+.loader-bar{width:160px;height:4px;background:#e2e8f0;border-radius:4px;overflow:hidden}
 .loader-fill{height:100%;background:linear-gradient(90deg,var(--blue),#6366f1);border-radius:4px;animation:lslide 1.2s ease forwards}
+@keyframes lslide{from{width:0}to{width:100%}}
 @keyframes lslide{from{width:0}to{width:100%}}
 
 /* ===== NAVBAR ===== */
