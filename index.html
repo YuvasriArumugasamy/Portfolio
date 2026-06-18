@@ -27,31 +27,44 @@
       <a class="nav-logo" href="#home">
         <span class="logo-bracket">&lt;/&gt;</span> Yuvasri
       </a>
+
+      <!-- Desktop nav links -->
       <ul class="nav-links" id="navLinks">
-        <li class="nav-close-row">
-          <button class="nav-close-btn" id="navClose" aria-label="Close menu">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </li>
         <li><a href="#home"     class="nav-link active">About</a></li>
         <li><a href="#skills"   class="nav-link">Skills</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
         <li><a href="#services" class="nav-link">Services</a></li>
         <li><a href="#contact"  class="nav-link">Contact</a></li>
-        <li class="nav-hire-mobile">
-          <a href="Yuvasri A - Front-End Web Developer.pdf" download class="hire-btn">
-            <i class="fa-solid fa-download"></i> Hire Me
-          </a>
-        </li>
       </ul>
-      <a href="Yuvasri A - Front-End Web Developer.pdf" download class="hire-btn hire-btn-desktop">
+
+      <!-- Desktop Hire Me -->
+      <a href="Yuvasri A - Front-End Web Developer.pdf" download class="hire-btn-desktop">
         <i class="fa-solid fa-download"></i> Hire Me
       </a>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+
+      <!-- Hamburger (mobile only) -->
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
   </nav>
+
+  <!-- ===== MOBILE MENU OVERLAY ===== -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileClose" aria-label="Close menu">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <ul>
+      <li><a href="#home"     class="mob-link">About</a></li>
+      <li><a href="#skills"   class="mob-link">Skills</a></li>
+      <li><a href="#projects" class="mob-link">Projects</a></li>
+      <li><a href="#services" class="mob-link">Services</a></li>
+      <li><a href="#contact"  class="mob-link">Contact</a></li>
+    </ul>
+    <a href="Yuvasri A - Front-End Web Developer.pdf" download class="mob-hire-btn">
+      <i class="fa-solid fa-download"></i> Hire Me
+    </a>
+  </div>
 
   <!-- ===== HERO SECTION ===== -->
   <section id="home" class="hero-section">
@@ -779,26 +792,27 @@
     type();
 
     /* ============ NAVBAR ============ */
-    const navbar = document.getElementById('navbar');
+    const navbar    = document.getElementById('navbar');
     const hamburger = document.getElementById('hamburger');
-    const navLinksEl = document.getElementById('navLinks');
-    const navClose = document.getElementById('navClose');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
 
     function openMenu() {
-      navLinksEl.classList.add('open');
-      hamburger.querySelector('i').className = 'fa-solid fa-xmark';
+      mobileMenu.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
     function closeMenu() {
-      navLinksEl.classList.remove('open');
-      hamburger.querySelector('i').className = 'fa-solid fa-bars';
+      mobileMenu.classList.remove('open');
       document.body.style.overflow = '';
     }
 
-    hamburger.addEventListener('click', () => {
-      navLinksEl.classList.contains('open') ? closeMenu() : openMenu();
+    hamburger.addEventListener('click', openMenu);
+    mobileClose.addEventListener('click', closeMenu);
+
+    // Close on mobile link click
+    document.querySelectorAll('.mob-link').forEach(link => {
+      link.addEventListener('click', closeMenu);
     });
-    navClose.addEventListener('click', closeMenu);
 
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 60);
@@ -808,7 +822,7 @@
       sections.forEach(s => {
         if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
       });
-      document.querySelectorAll('.nav-link').forEach(l => {
+      document.querySelectorAll('.nav-link, .mob-link').forEach(l => {
         l.classList.toggle('active', l.getAttribute('href') === '#' + current);
       });
       // Back to top
